@@ -13,7 +13,7 @@ class Torch_Morlet_Transform(torch.nn.Module):
         boundaries = (number_of_scycles+1)*3 / freq
         time = np.arange(-boundaries,boundaries,discretness)
         self.wavelet = torch.Tensor(np.real(np.array(np.squeeze([morlet_wavelet(freq,time,number_of_scycles)])))).cuda()
-
+        self.shape = self.wavelet.shape
 
     def forward(self, signal):
         convolve =torch_fftconvolve('valid') 
@@ -30,6 +30,7 @@ class Torch_Morlet_Transform_imag(torch.nn.Module):
         boundaries = (number_of_scycles+1)*3 / freq
         time = np.arange(-boundaries,boundaries,discretness)
         self.wavelet = torch.Tensor(np.imag(np.array(np.squeeze([morlet_wavelet(freq,time,number_of_scycles)])))).cuda() 
+        self.shape = self.wavelet.shape
 
 
     def forward(self, signal):
